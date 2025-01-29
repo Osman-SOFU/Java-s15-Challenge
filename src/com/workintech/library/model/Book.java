@@ -3,7 +3,7 @@ package com.workintech.library.model;
 import java.time.LocalDate;
 
 public class Book {
-    private int bookID;
+    private Long bookID;
     private String author;
     private String name;
     private double price;
@@ -12,7 +12,7 @@ public class Book {
     private LocalDate dateOfPurchase;
 
     // Constructor
-    public Book(int bookID, String name, String author, double price, String edition, LocalDate dateOfPurchase) {
+    public Book(Long bookID, String name, String author, double price, String edition, LocalDate dateOfPurchase) {
         this.bookID = bookID;
         this.name = name;
         this.author = author;
@@ -30,7 +30,7 @@ public class Book {
         this.price = price;
     }
 
-    public int getBookID() {
+    public Long getBookID() {
         return bookID;
     }
 
@@ -74,5 +74,19 @@ public class Book {
     // Kitap durumunu günceller
     public void updateStatus(String newStatus) {
         this.status = newStatus;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(obj == null || this.getClass() != obj.getClass()){
+            return false;
+        }
+
+        Book books = (Book) obj;
+
+        return this.bookID.equals(books.bookID);
     }
 }

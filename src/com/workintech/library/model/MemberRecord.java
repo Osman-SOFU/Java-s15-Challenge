@@ -3,7 +3,7 @@ package com.workintech.library.model;
 import java.time.LocalDate;
 
 public class MemberRecord {
-    private int memberId;
+    private Long memberId;
     private String type; // "Student" veya "Faculty"
     private LocalDate dateOfMembership;
     private int noBooksIssued;
@@ -13,7 +13,7 @@ public class MemberRecord {
     private String phoneNo;
 
     // Constructor
-    public MemberRecord(int memberId, String type, String name, String address, String phoneNo, int maxBookLimit) {
+    public MemberRecord(Long memberId, String type, String name, String address, String phoneNo, int maxBookLimit) {
         this.memberId = memberId;
         this.type = type;
         this.name = name;

@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Library library = new Library();
-    private static final Map<Book, Reader> borrowedBooks = new HashMap<>();
+    private static final Map<Book, Reader> books = new HashMap<>();
 
     public static void main(String[] args) {
         System.out.println("📚 Kütüphane Yönetim Sistemine Hoş Geldiniz!");
@@ -17,7 +17,11 @@ public class Main {
         // Örnek okuyucu ve kitap eklenmesi
         Reader exampleReader = new Reader("Osman Sofu");
         library.getReader().add(exampleReader);
-        library.newBook(new Book(1, "Java 101", "Ali Yılmaz", 50.0, "1. Baskı", LocalDate.of(2022, 3, 1)));
+        library.newBook(new Book(1L, "Java 101", "Ali Yılmaz", 50.0, "1. Baskı", LocalDate.of(2022, 3, 1)));
+        library.newBook(new Book(2L, "Java 102", "Ali Yılmaz", 75.0, "2. Baskı", LocalDate.of(2023, 4, 2)));
+        library.newBook(new Book(3L, "Java 103", "Veli Meli", 25.0, "3. Baskı", LocalDate.of(2024, 5, 3)));
+        library.newBook(new Book(4L, "Java 104", "Mehmet Yıldız", 100.0, "4. Baskı", LocalDate.of(2020, 6, 4)));
+        library.newBook(new Book(5L, "Java 105", "Ahmet Sofu", 150.0, "5. Baskı", LocalDate.of(2021, 7, 5)));
 
         do {
             displayMenu();
@@ -55,7 +59,7 @@ public class Main {
 
     private static void addNewBook() {
         System.out.print("Kitap ID: ");
-        int id = scanner.nextInt();
+        Long id = Long.valueOf(scanner.nextInt());
         scanner.nextLine();
 
         System.out.print("Kitap Adı: ");
@@ -180,10 +184,10 @@ public class Main {
             return;
         }
 
-        if (borrowedBooks.containsKey(book)) {
+        if (books.containsKey(book)) {
             System.out.println("Kitap zaten ödünç alınmış.");
         } else {
-            borrowedBooks.put(book, reader);
+            books.put(book, reader);
             library.lendBook(book, reader);
             System.out.println(reader.getName() + " adlı kullanıcıya " + book.getTitle() + " kitabı ödünç verildi.");
         }
@@ -197,7 +201,7 @@ public class Main {
         System.out.print("Okuyucu Adı: ");
         String readerName = scanner.nextLine();
 
-        Book book = borrowedBooks.keySet().stream()
+        Book book = books.keySet().stream()
                 .filter(b -> b.getBookID() == bookId)
                 .findFirst()
                 .orElse(null);
@@ -207,13 +211,13 @@ public class Main {
             return;
         }
 
-        Reader reader = borrowedBooks.get(book);
+        Reader reader = books.get(book);
         if (!reader.getName().equalsIgnoreCase(readerName)) {
             System.out.println("Bu kullanıcı kitabı ödünç almamış.");
             return;
         }
 
-        borrowedBooks.remove(book);
+        books.remove(book);
         library.takeBackBook(book, reader);
         System.out.println(reader.getName() + " adlı kullanıcı " + book.getTitle() + " kitabını iade etti.");
     }
