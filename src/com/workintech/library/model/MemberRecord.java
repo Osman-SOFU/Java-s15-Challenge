@@ -4,16 +4,16 @@ import java.time.LocalDate;
 
 public class MemberRecord {
     private Long memberId;
-    private String type; // "Student" veya "Faculty"
+    private Type type; // "Student" veya "Faculty"
     private LocalDate dateOfMembership;
     private int noBooksIssued;
-    private int maxBookLimit;
+    private static int maxBookLimit = 5;
     private String name;
     private String address;
     private String phoneNo;
 
     // Constructor
-    public MemberRecord(Long memberId, String type, String name, String address, String phoneNo, int maxBookLimit) {
+    public MemberRecord(Long memberId, Type type, String name, String address, String phoneNo, int maxBookLimit) {
         this.memberId = memberId;
         this.type = type;
         this.name = name;
@@ -21,7 +21,19 @@ public class MemberRecord {
         this.phoneNo = phoneNo;
         this.dateOfMembership = LocalDate.now(); // Üyelik başlangıç tarihi otomatik olarak atanır
         this.noBooksIssued = 0; // Başlangıçta kitap ödünç alınmamış
-        this.maxBookLimit = maxBookLimit;
+        this.maxBookLimit = 5;
+    }
+
+    public MemberRecord() {
+
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public static int getMaxBookLimit() {
+        return maxBookLimit;
     }
 
     // Metot: Üye bilgilerini döndürür
@@ -33,7 +45,7 @@ public class MemberRecord {
                 ", Adres: " + address +
                 ", Telefon: " + phoneNo +
                 ", Ödünç Alınan Kitap Sayısı: " + noBooksIssued +
-                ", Maksimum Kitap Limiti: " + maxBookLimit;
+                ", Maksimum Kitap Limiti: " + 5;
     }
 
     // Metot: Ödünç alınan kitap sayısını artırır
@@ -56,8 +68,8 @@ public class MemberRecord {
         }
     }
 
-    // Metot: Üyenin fatura borcunu ödemesini sağlar
-    public void payBill(double amount) {
-        System.out.println(name + " adlı üye " + amount + " TL fatura ödedi.");
+    // Metot: Üyenin faturasının iadesi
+    public void payBill(Book book, Reader reader) {
+        System.out.println(reader.getName() + " adlı üyeye " + book.getPrice() + " TL fatura bedeli edildi.");
     }
 }

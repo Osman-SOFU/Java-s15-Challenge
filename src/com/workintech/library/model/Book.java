@@ -1,6 +1,7 @@
 package com.workintech.library.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Book {
     private Long bookID;
@@ -22,7 +23,12 @@ public class Book {
         this.dateOfPurchase = dateOfPurchase;
     }
 
-    public double getPrice() {
+    // Metotlar
+    public String getName() {
+        return name;
+    }
+
+    public Double getPrice() {
         return price;
     }
 
@@ -30,13 +36,12 @@ public class Book {
         this.price = price;
     }
 
-    public Long getBookID() {
-        return bookID;
+    public String getStatus() {
+        return status;
     }
 
-    // Metotlar
-    public String getTitle() {
-        return name;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAuthor() {
@@ -87,6 +92,11 @@ public class Book {
 
         Book books = (Book) obj;
 
-        return this.bookID.equals(books.bookID);
+        return this.bookID.equals(books.bookID) || this.status.equals((books.status));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookID);
     }
 }

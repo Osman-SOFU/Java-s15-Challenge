@@ -12,22 +12,20 @@ public class Author extends Person {
         this.books = new ArrayList<>();
     }
 
+    public Author() {
+        super();
+        this.books = new ArrayList<>();
+    }
+
     // Metot: Yeni kitap ekleme
     public void newBook(Book book) {
         books.add(book);
-        System.out.println(getName() + " adlı yazar yeni bir kitap ekledi: " + book.getTitle());
     }
 
+
     // Metot: Yazara ait kitapları gösterme
-    public void showBook() {
-        if (books.isEmpty()) {
-            System.out.println(getName() + " adlı yazarın henüz kitabı yok.");
-        } else {
-            System.out.println(getName() + " adlı yazarın kitapları:");
-            for (Book book : books) {
-                book.display();
-            }
-        }
+    public List<Book> showBook() {
+        return books;
     }
 
     // Metot: Yazarın kim olduğunu döndürür

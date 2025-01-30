@@ -1,16 +1,18 @@
 package com.workintech.library.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Library {
     private List<Book> books;   // Kütüphanedeki kitaplar
-    private List<Reader> readers;  // Kütüphane üyeleri
+    private Set<Reader> readers;  // Kütüphane üyeleri
 
     // Constructor
     public Library() {
         this.books = new ArrayList<>();
-        this.readers = new ArrayList<>();
+        this.readers = new HashSet<>();
     }
 
     // Metot: Kütüphanedeki kitapları döndürür
@@ -19,14 +21,14 @@ public class Library {
     }
 
     // Metot: Kütüphane üyelerini döndürür
-    public List<Reader> getReader() {
+    public Set<Reader> getReader() {
         return readers;
     }
 
     // Metot: Kütüphaneye yeni bir kitap ekler
     public void newBook(Book book) {
         books.add(book);
-        System.out.println("Yeni kitap eklendi: " + book.getTitle());
+        System.out.println("Yeni kitap eklendi: " + book.getName());
     }
 
     // Metot: Kullanıcıya kitap ödünç verme
@@ -37,8 +39,7 @@ public class Library {
         }
         if (books.contains(book)) {
             reader.borrowBook(book);
-            books.remove(book);
-            System.out.println(reader.getName() + " kitabı ödünç aldı: " + book.getTitle());
+            System.out.println(reader.getName() + " kitabı ödünç aldı: " + book.getName());
         } else {
             System.out.println("Kitap kütüphanede bulunmuyor.");
         }
@@ -49,7 +50,7 @@ public class Library {
         if (readers.contains(reader)) {
             reader.returnBook(book);
             books.add(book);
-            System.out.println(reader.getName() + " kitabı iade etti: " + book.getTitle());
+            System.out.println(reader.getName() + " kitabı iade etti: " + book.getName());
         } else {
             System.out.println("Hata: Kullanıcı kütüphaneye kayıtlı değil.");
         }

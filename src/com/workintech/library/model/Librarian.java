@@ -9,6 +9,8 @@ public class Librarian extends Person {
         this.password = password;
     }
 
+    public Librarian() {}
+
     public String getPassword() {
         return password;
     }
@@ -18,17 +20,17 @@ public class Librarian extends Person {
     }
 
     // Metot: Kitap arama (Sadece simüle edilen bir çıktı veriyor)
-    public void searchBook(String bookTitle, Library library) {
+    public void searchBook(String bookName, Library library) {
         boolean found = false;
         for (Book book : library.getBooks()) {
-            if (book.getTitle().equalsIgnoreCase(bookTitle)) {
-                System.out.println("Kitap bulundu: " + book.getTitle());
+            if (book.getName().equals(bookName)) {
+                System.out.println("Kitap bulundu: " + book.getName());
                 found = true;
                 break;
             }
         }
         if (!found) {
-            System.out.println("Kitap bulunamadı: " + bookTitle);
+            System.out.println("Kitap bulunamadı: " + bookName);
         }
     }
 
@@ -36,7 +38,7 @@ public class Librarian extends Person {
     public void verifyMember(String readerName, Library library) {
         boolean found = false;
         for (Reader reader : library.getReader()) {
-            if (reader.getName().equalsIgnoreCase(readerName)) {
+            if (reader.getName().equals(readerName)) {
                 System.out.println("Üyelik doğrulandı: " + reader.getName());
                 found = true;
                 break;
@@ -51,7 +53,7 @@ public class Librarian extends Person {
     public void issueBook(Book book, Reader reader, Library library) {
         if (library.getBooks().contains(book) && library.getReader().contains(reader)) {
             library.lendBook(book, reader);
-            System.out.println(reader.getName() + " adlı kullanıcıya " + book.getTitle() + " kitabı ödünç verildi.");
+            System.out.println(reader.getName() + " adlı kullanıcıya " + book.getName() + " kitabı ödünç verildi.");
         } else {
             System.out.println("Hata: Kitap veya üye bulunamadı.");
         }
@@ -66,15 +68,14 @@ public class Librarian extends Person {
     }
 
     // Metot: Fatura oluşturma
-    public void createBill(Reader reader, double amount) {
-        System.out.println(reader.getName() + " için fatura oluşturuldu. Borç: " + amount + " TL");
+    public void createBill(Reader reader, Book book) {
+        System.out.println(reader.getName() + " için fatura oluşturuldu. Borç: " + book.getPrice() + " TL");
     }
 
     // Metot: Kullanıcının kitabı iade etmesi
     public void returnBook(Book book, Reader reader, Library library) {
         if (library.getReader().contains(reader)) {
-            library.takeBackBook(book, reader);
-            System.out.println(reader.getName() + " adlı kullanıcı " + book.getTitle() + " kitabını iade etti.");
+            System.out.println(reader.getName() + " adlı kullanıcı " + book.getName() + " kitabını iade etti.");
         } else {
             System.out.println("Hata: Üye bulunamadı.");
         }
