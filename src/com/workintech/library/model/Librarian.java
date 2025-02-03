@@ -68,7 +68,7 @@ public class Librarian extends Person {
     }
 
     // Metot: Fatura oluşturma
-    public void createBill(Reader reader, Book book) {
+    public void createBill(Book book, Reader reader) {
         System.out.println(reader.getName() + " için fatura oluşturuldu. Borç: " + book.getPrice() + " TL");
     }
 

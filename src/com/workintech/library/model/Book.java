@@ -18,14 +18,22 @@ public class Book {
         this.name = name;
         this.author = author;
         this.price = price;
-        this.status = "Available"; // Varsayılan: Mevcut
+        this.status = "Alınabilir"; // Varsayılan: Mevcut
         this.edition = edition;
         this.dateOfPurchase = dateOfPurchase;
+    }
+
+    public Book() {
+
     }
 
     // Metotlar
     public String getName() {
         return name;
+    }
+
+    public Long getBookID() {
+        return bookID;
     }
 
     public Double getPrice() {
@@ -50,17 +58,14 @@ public class Book {
 
     // Kitap ödünç alındığında çağrılır
     public void changeOwner() {
-        if (this.status.equals("Available")) {
-            this.status = "Borrowed";
-            System.out.println(name + " kitabı ödünç alındı.");
-        } else {
-            System.out.println(name + " kitabı zaten ödünç alınmış.");
+        if (this.status.equals("Alınmış")) {
+            this.status = "Alınabilir";
         }
     }
 
     // Kitabın mevcut durumunu döndürür
     public String getOwner() {
-        return status.equals("Borrowed") ? "Kitap ödünç alınmış" : "Kitap kütüphanede mevcut";
+        return status.equals("Alınmış") ? "Kitap ödünç alınmış" : "Kitap kütüphanede mevcut";
     }
 
     // Kitap bilgilerini ekrana yazdırır
@@ -71,7 +76,7 @@ public class Book {
         System.out.println("Yazar: " + author);
         System.out.println("Fiyat: " + price + " TL");
         System.out.println("Baskı: " + edition);
-        System.out.println("Satın Alma Tarihi: " + dateOfPurchase);
+        System.out.println("Tarihi: " + dateOfPurchase);
         System.out.println("Durum: " + status);
         System.out.println("---------------------------------");
     }
@@ -81,18 +86,13 @@ public class Book {
         this.status = newStatus;
     }
 
+    // Book sınıfında override edilmiş equals ve hashCode metodları
     @Override
-    public boolean equals(Object obj) {
-        if(this == obj) {
-            return true;
-        }
-        if(obj == null || this.getClass() != obj.getClass()){
-            return false;
-        }
-
-        Book books = (Book) obj;
-
-        return this.bookID.equals(books.bookID) || this.status.equals((books.status));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(bookID, book.bookID); // Kitaplar ID'leri ile karşılaştırılır
     }
 
     @Override

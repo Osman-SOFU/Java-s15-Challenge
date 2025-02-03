@@ -17,6 +17,10 @@ public class Author extends Person {
         this.books = new ArrayList<>();
     }
 
+    public List<Book> getBooks() {
+        return books;
+    }
+
     // Metot: Yeni kitap ekleme
     public void newBook(Book book) {
         books.add(book);

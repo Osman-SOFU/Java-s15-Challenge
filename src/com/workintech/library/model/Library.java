@@ -38,8 +38,7 @@ public class Library {
             return;
         }
         if (books.contains(book)) {
-            reader.borrowBook(book);
-            System.out.println(reader.getName() + " kitabı ödünç aldı: " + book.getName());
+            reader.borrowBook(book,reader);
         } else {
             System.out.println("Kitap kütüphanede bulunmuyor.");
         }
@@ -48,9 +47,11 @@ public class Library {
     // Metot: Kullanıcının kitabı iade etmesi
     public void takeBackBook(Book book, Reader reader) {
         if (readers.contains(reader)) {
-            reader.returnBook(book);
-            books.add(book);
-            System.out.println(reader.getName() + " kitabı iade etti: " + book.getName());
+            reader.returnBook(book, reader);
+            // Aynı bookID'ye sahip bir kitap zaten listede mi kontrol et
+            if (!books.contains(book)) {
+                books.add(book); // Sadece listeye eklenmeden önce yoksa ekle
+            }
         } else {
             System.out.println("Hata: Kullanıcı kütüphaneye kayıtlı değil.");
         }
@@ -65,6 +66,26 @@ public class Library {
             for (Book book : books) {
                 book.display();
             }
+        }
+    }
+
+    public boolean listBooksByCategory(Class<? extends Book> category) {
+        System.out.println(category.getSimpleName() + " türündeki kitaplar:");
+        books.stream()
+                .filter(category::isInstance)
+                .forEach(Book::display);
+        return false;
+    }
+
+    // Library sınıfına ekleyin
+    public boolean deleteBook(Book book) {
+        if (books.contains(book)) { // Kitap var mı kontrol et
+            books.remove(book);     // Kitabı listeden çıkar
+            System.out.println(book.getName() + " kitabı başarıyla kütüphaneden silindi.");
+            return true;
+        } else {
+            System.out.println(book.getName() + " kitabı bulunamadı. Silme başarısız.");
+            return false;
         }
     }
 }

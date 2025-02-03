@@ -4,13 +4,13 @@ import java.time.LocalDate;
 
 public class MemberRecord {
     private Long memberId;
-    private Type type; // "Student" veya "Faculty"
+    private static Type type; // "Student" veya "Faculty"
     private LocalDate dateOfMembership;
     private int noBooksIssued;
     private static int maxBookLimit = 5;
-    private String name;
-    private String address;
-    private String phoneNo;
+    private static String name;
+    private static String address;
+    private static String phoneNo;
 
     // Constructor
     public MemberRecord(Long memberId, Type type, String name, String address, String phoneNo, int maxBookLimit) {
@@ -28,7 +28,19 @@ public class MemberRecord {
 
     }
 
-    public Type getType() {
+    public static String getName() {
+        return name;
+    }
+
+    public static String getAddress() {
+        return address;
+    }
+
+    public static String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public static Type getType() {
         return type;
     }
 
@@ -37,15 +49,15 @@ public class MemberRecord {
     }
 
     // Metot: Üye bilgilerini döndürür
-    public String getMember() {
-        return "Üye ID: " + memberId +
+    public void getMember() {
+        System.out.println( "Üye ID: " + memberId +
                 ", İsim: " + name +
                 ", Tür: " + type +
                 ", Üyelik Tarihi: " + dateOfMembership +
                 ", Adres: " + address +
                 ", Telefon: " + phoneNo +
                 ", Ödünç Alınan Kitap Sayısı: " + noBooksIssued +
-                ", Maksimum Kitap Limiti: " + 5;
+                ", Maksimum Kitap Limiti: " + 5);
     }
 
     // Metot: Ödünç alınan kitap sayısını artırır
@@ -70,6 +82,6 @@ public class MemberRecord {
 
     // Metot: Üyenin faturasının iadesi
     public void payBill(Book book, Reader reader) {
-        System.out.println(reader.getName() + " adlı üyeye " + book.getPrice() + " TL fatura bedeli edildi.");
+        System.out.println(reader.getName() + " adlı üyeye " + book.getPrice() + " TL fatura iadesi yapıldı.");
     }
 }
