@@ -1,0 +1,124 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+' Soyut sınıf
+abstract class Person {
+    - name : String
+
+    + getName() : String
+    + whoYouAre() : String
+}
+
+' Sınıflar
+class Author {
+    - books : List<Book>
+
+    + whoYouAre() : String
+}
+
+class Librarian {
+    - password : String
+
+    + createBill(book : Book, reader : Reader) : void
+    + whoYouAre() : String
+}
+
+class Reader {
+    - books : List<Book>
+    - librarian : Librarian
+    - memberRecord : MemberRecord
+
+    + getBooks() : List<Book>
+    + borrowBook(book : Book) : void
+    + returnBook(book : Book) : void
+    + showBook() : void
+    + whoYouAre() : String
+}
+
+class MemberRecord {
+    - memberId : Long
+    - type : Type
+    - name : String
+    - address : String
+    - phoneNo : String
+    - dateOfMembership : LocalDate
+
+    + getName() : String
+    + getAddress() : String
+    + getPhoneNo() : String
+    + getType() : Type
+    + getMaxBookLimit() : String
+    + getMember() : void
+    + payBill(book : Book, reader : Reader) : void
+}
+
+class Book {
+    - bookID : Long
+    - author : String
+    - name : String
+    - price : double
+    - status : String
+    - edition: String
+    - dateOfPurchase: LocalDate
+
+    + getName() : String
+    + getBookID() : Long
+    + getPrice() : Double
+    + setPrice(price : double) : void
+    + getStatus() : String
+    + setStatus(status : String) : void
+    + getAuthor() : void
+    + changeOwner() : void
+    + getOwner() : String
+    + display() : void
+    + updateStatus(newStatus : String) : void
+    + equals(o : Object) : boolean
+    + hashCode() : int
+}
+
+class Library {
+    - books : List<Book>
+    - readers : Set<Reader>
+
+    + getBooks() : List<Book>
+    + getReader() : Set<Reader>
+    + newBook(book: Book) : void
+    + lendBook(book: Book, reader: Reader) : void
+    + takeBackBook(book: Book, reader: Reader) : void
+    + showBook() : void
+    + listBooksByCategory(category : Class<? extends Book>) : boolean
+    + deleteBook(book: Book) : boolean
+}
+
+' Enum tanımı
+enum Type {
+    STUDENT
+    FACULTY
+}
+
+' Alt sınıflar
+class Journals extends Book
+class StudyBooks extends Book
+class Magazines extends Book
+
+' İlişkiler
+Person <|-- Reader
+Person <|-- Author
+Person <|-- Librarian
+
+
+Book --> Reader : "display,status"
+Book --> Library : "display"
+Librarian --> Reader : "bill"
+Library --> Librarian : "readers,lend"
+Library --> Reader : "books"
+MemberRecord --> Reader : "limit,pay"
+Reader --> Library : "borrow,return"
+
+Journals <|-- Book
+StudyBooks <|-- Book
+Magazines <|-- Book
+
+MemberRecord <|-- Type
+
+@enduml
